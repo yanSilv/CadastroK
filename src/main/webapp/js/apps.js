@@ -1,15 +1,16 @@
 angular.module("cadUsuario", []);
 angular.module("cadUsuario").controller("cadUsuarioCtl", function ($scope, $window){
     $scope.login = [{nome: "", senha:""}];
+    $scope.cad = [{nome: "", idade:"", endereco:"", telefone:""}];
     
     $scope.logarUser = function(login) {
-        console.log("Ola mundo");
         console.log(login.nome);
-        console.log(login.senha);
         $window.location.href = 'exibicao.html';
     };
     
-    $scope.cadastroUser=function (){
+    $scope.cadastroUser = function(cad) {
+        console.log("Chegou aqui;;;;");
+        console.log(cad.nome);
         
     };
 });
