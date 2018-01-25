@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html ng-app="cadUsuario">
     <head>
         <title>Cadastro</title>
         <meta charset="UTF-8">
@@ -12,8 +12,10 @@ and open the template in the editor.
         <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
         <link href="css/estilo.css" type="text/css" rel="stylesheet">
         <link rel="shortcut icon" type="image/x-icon" href="imagens/fa.ico">
+        <script type="text/javascript" src="js/angular.js"></script>
+        <script type="text/javascript" src="js/apps.js"></script>
     </head>
-    <body>
+    <body ng-controller="cadUsuarioCtl">
         
         <div class="container">
             <div class="col-md-6 central">
@@ -23,20 +25,21 @@ and open the template in the editor.
                 <form name="cadastroUser">
                     
                     <div class="form-group">
-                        Nome:  <input type="text" class="form-control" placeholder="Nome">
+                        Nome:  <input type="text" class="form-control" placeholder="Nome" ng-model="cad.nome">
                     </div>
                     <div class="form-group">
-                        Idade: <input type="text" class="form-control" placeholder="Idade">
+                        Idade: <input type="number" class="form-control" placeholder="Idade" ng-model="cad.idade">
                     </div>
                     <div class="form-group">
-                        Endereco: <input type="text" class="form-control" placeholder="Endereço">
+                        Endereco: <input type="text" class="form-control" placeholder="Endereço" ng-model="cad.endereco">
                     </div>
                     <div class="form-group">
-                        Telefone: <input type="number" class="form-control" placeholder="Telefone">
+                        Telefone: <input type="number" class="form-control" placeholder="Telefone" ng-model="cad.telefone">
                     </div>
                     <div class="form-group">
-                        <label id="Cadastrar" class="btn btn-primary">Cadastrar</label>
-                        <a href="index.html"><label id="Cancelar" class="btn btn-primary">Cancelar</label></a>
+                        {{cad.nome}}
+                        <label id="Cadastrar" class="btn btn-primary" ng-click="cadastroUser(cad)">Cadastrar</label>
+                        <a href="index.html" class="btn btn-primary" >Cancelar</a>
                     </div>
                     
                 </form>
