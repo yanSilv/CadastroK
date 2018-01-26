@@ -8,7 +8,7 @@ angular.module("cadUsuario").controller("cadUsuarioCtl", function ($scope, $wind
         $window.location.href = 'exibicao.html';
     };
     
-    $scope.cadastroUser = function(cad) {
+    $scope.enviadados = function(cad) {
         console.log("Chegou aqui;;;;");
         console.log(cad.nome);
         
