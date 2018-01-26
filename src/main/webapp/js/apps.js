@@ -8,46 +8,24 @@ angular.module("cadUsuario").controller("cadUsuarioCtl", function ($scope, $wind
     
     $scope.logarUser = function(login) {
         console.log(login.nome);
-        $window.location.href = 'exibicao.html';
-        $http.get(urlBase + "consultadata/", {params: {
-                data: Time(),
-                validos: consulta.validos,
-                contigencia: consulta.contigencia,
-                filia: consulta.tx_filial,
-                caixa: consulta.tx_caixa
+        $http.post(urlBase + "acessologin/", {params: {
+                usuario: login.nome,
+                senha: login.senha
             }}).then(function (response) {
-            $scope.objeto = response.data;
-            $scope.totalItems = $scope.objeto.length;
-            $scope.alimentaTable = $scope.objeto;
+            console.log(response.data);
 
-            if ($scope.totalItems === 0) {
+            /*if ($scope.totalItems === 0) {
                 $scope.retornoConsulta = "Erro";
             } else {
                 $scope.retornoConsulta = "Ok";
-            }
+                $window.location.href = 'exibicao.html';
+            }*/
         });
     };
     
     $scope.enviadados = function(cad) {
         console.log("Chegou aqui;;;;");
         console.log(cad.nome);
-        $http.get(urlBase + "consultadata/", {params: {
-                data: Time(),
-                validos: consulta.validos,
-                contigencia: consulta.contigencia,
-                filia: consulta.tx_filial,
-                caixa: consulta.tx_caixa
-            }}).then(function (response) {
-            $scope.objeto = response.data;
-            $scope.totalItems = $scope.objeto.length;
-            $scope.alimentaTable = $scope.objeto;
-
-            if ($scope.totalItems === 0) {
-                $scope.retornoConsulta = "Erro";
-            } else {
-                $scope.retornoConsulta = "Ok";
-            }
-        });
         
     };
 });
