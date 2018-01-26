@@ -24,6 +24,7 @@ public class AcessoRota {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
+    @Path("/cadastro")
     public boolean getCadastroUsuario (ModUsuario modUsuario) {
         boolean status = false;
         UsuarioCtl useCtl = new UsuarioCtl();

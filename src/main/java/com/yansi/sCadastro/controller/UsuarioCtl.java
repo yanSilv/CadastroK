@@ -18,16 +18,17 @@ import java.util.logging.Logger;
 public class UsuarioCtl {
 
     ModUsuario validaLogin(ModUsuario modUsuario) {
-        ModUsuario modUse = new ModUsuario(-1);
+        ModUsuario modUse = new ModUsuario();
         UsuarioDAO daoUse = new UsuarioDAO();
 
         //Verifica se usuario não esta em branco
-        if (modUsuario.getUsuario().equals(null)) {
+        System.out.println("Linha 25"+modUsuario.getUsuario());
+        if (modUsuario.getUsuario().equals(null) || modUsuario.getUsuario().equals("")) {
             return modUse;
         }
 
         //Verifica se a senha não está em branco 
-        if (modUsuario.getSenha().equals(null)) {
+        if (modUsuario.getSenha().equals(null) || modUsuario.getSenha().equals("")) {
             return modUse;
         }
 
