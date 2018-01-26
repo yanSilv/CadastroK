@@ -1,6 +1,9 @@
 
 package com.yansi.sCadastro.Modelo;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ModUsuario {
     
     private int    id;
