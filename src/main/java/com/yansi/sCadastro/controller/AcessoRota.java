@@ -10,21 +10,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("acessologin")
-public class Login {
+public class AcessoRota {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ModUsuario getValidaAcesso (ModUsuario modUsuario) {
-        String status = "Olá Mundo 1";
+        UsuarioCtl useCtl = new UsuarioCtl();
         
-        JOptionPane.showMessageDialog(null, modUsuario.getNome());
-        JOptionPane.showMessageDialog(null, modUsuario.getSenha());
-        JOptionPane.showMessageDialog(null, modUsuario.getUsuario());
-        JOptionPane.showMessageDialog(null, modUsuario.getIdade());
-        JOptionPane.showMessageDialog(null, modUsuario.getId());
-        System.out.println(status);
+        return useCtl.validaLogin(modUsuario);
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean getCadastroUsuario (ModUsuario modUsuario) {
+        boolean status = false;
+        UsuarioCtl useCtl = new UsuarioCtl();
         
-        return modUsuario;
+        status = useCtl.cadastroUsuario(modUsuario);
+        
+        return status;
     }
 }

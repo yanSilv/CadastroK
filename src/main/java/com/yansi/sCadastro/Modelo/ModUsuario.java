@@ -13,6 +13,13 @@ public class ModUsuario {
     private String telefone;
     private String usuario;
     private String senha;
+    
+    public ModUsuario (){
+    }
+    
+    public ModUsuario (int id){
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
