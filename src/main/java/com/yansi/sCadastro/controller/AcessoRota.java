@@ -2,8 +2,11 @@
 package com.yansi.sCadastro.controller;
 
 import com.yansi.sCadastro.Modelo.ModUsuario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -32,5 +35,14 @@ public class AcessoRota {
         status = useCtl.cadastroUsuario(modUsuario);
         
         return status;
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/exibicao")
+    public ArrayList<ModUsuario> getExibicaoUser () {
+        UsuarioCtl useCtl = new UsuarioCtl();
+        
+        return useCtl.exibicaoTotal();
     }
 }

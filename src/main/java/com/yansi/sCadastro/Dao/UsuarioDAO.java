@@ -72,8 +72,8 @@ public class UsuarioDAO {
         ps.execute();
     }
     
-    public List<ModUsuario> lista () throws SQLException {
-        List<ModUsuario> lista = new ArrayList<ModUsuario>();
+    public ArrayList<ModUsuario> lista () throws SQLException {
+        ArrayList<ModUsuario> lista = new ArrayList<ModUsuario>();
         
         Conexao conn = new Conexao();
         

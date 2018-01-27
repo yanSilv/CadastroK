@@ -8,6 +8,8 @@ package com.yansi.sCadastro.controller;
 import com.yansi.sCadastro.Dao.UsuarioDAO;
 import com.yansi.sCadastro.Modelo.ModUsuario;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,5 +78,19 @@ public class UsuarioCtl {
         }
 
         return status;
+    }
+
+    ArrayList<ModUsuario> exibicaoTotal() {
+        ArrayList<ModUsuario> modUser= new ArrayList<ModUsuario>();
+        UsuarioDAO userDao = new UsuarioDAO();
+        
+        try {
+            modUser = userDao.lista();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erro ao retornar a lista de usuario");
+        }
+        
+        return modUser;
     }
 }

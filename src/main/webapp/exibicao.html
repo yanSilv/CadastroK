@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html ng-app="cadUsuario">
     <head>
         <title>Exibição</title>
         <meta charset="UTF-8">
@@ -12,22 +12,24 @@ and open the template in the editor.
         <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
         <link href="css/estilo.css" type="text/css" rel="stylesheet">
         <link rel="shortcut icon" type="image/x-icon" href="imagens/fa.ico">
+        <script type="text/javascript" src="js/angular.js"></script>
+        <script type="text/javascript" src="js/apps.js"></script>
     </head>
-    <body>
+    <body ng-controller="cadUsuarioCtl">
         <div>
             <div class="container">
                 <div class="col-md-6 central">
                     <!--Div do Menu, Necessario Css-->
                     <nav class="navbar navbar-default">
                             <ul class="nav nav-tabs">
-                                <li class=""><a href="#">Usuario "Algem"</a></li>
+                                <li class=""><a href="#">{{usuario.nome}}</a></li>
                                 <li class="active"><a href="#">Exibição</a></li>
                                 <li class=""><a href="#">Mudar Usuario</a></li>
                                 <li class=""><a href="index.html">Sair</a></li>
                             </ul>
                     </nav>
                     
-                    <table class="table text-primary">
+                    <table class="table text-primary" ng-init="exibeUsuarios()">
                         <thead>
                         <th>Nome</th>
                         <th>Idade</th>
@@ -35,11 +37,11 @@ and open the template in the editor.
                         <th>Telefone</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Yan</td>
-                                <td>33</td>
-                                <td>AV são jorge</td>
-                                <td>33333333</td>
+                        <tr ng-repeat = "listUse in listUses">
+                                <td>{{listUse.nome}}</td>
+                                <td>{{listUse.idade}}</td>
+                                <td>{{listUse.endereco}}</td>
+                                <td>{{listUse.telefone}}</td>
                             </tr>
                         </tbody>
                     </table>
