@@ -52,9 +52,29 @@ public class AutorizadorDAO {
         if(rs.next()) {
             modUse.setUsuario(rs.getString("id_user"));
             modUse.setToken(rs.getString("token"));
+        } else {
+            modUse.setUsuario("null");
+            modUse.setToken("null");
         }
         
         return modUse;
+    }
+
+    public boolean deleteToken(String token) throws SQLException {
+        
+        Conexao conn = new Conexao();
+        
+        String sql = "DELETE FROM tb_token "
+                + "WHERE token = ? ;";
+        System.out.println("LINHA 69 "+token);
+        PreparedStatement ps;
+        
+        ps = conn.getConexao().prepareStatement(sql);
+        ps.setString(1, token);
+        
+        ps.executeUpdate();
+        
+        return true;
     }
     
 }

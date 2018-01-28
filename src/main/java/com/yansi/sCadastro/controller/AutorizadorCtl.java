@@ -43,13 +43,29 @@ public class AutorizadorCtl {
         try {
 
             modToken = autDao.autorizacao(token);
-            System.out.println("LINHA 46 " + modToken.getToken());
+            System.out.println("LINHA 46 " + modToken.getToken() +" "+"null".equals(modToken.getToken()) +" "+modToken.getToken() );
             if (!"null".equals(modToken.getToken())) {
                 if (modToken.getToken().equals(token)) {
                     status = true;
                 }
             }
 
+        } catch (SQLException ex) {
+            Logger.getLogger(AutorizadorCtl.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        }
+
+        return status;
+    }
+
+    boolean deleteToken(String token) {
+        boolean status;
+        AutorizadorDAO autDao = new AutorizadorDAO();
+
+        try {
+
+            status = autDao.deleteToken(token);
+           
         } catch (SQLException ex) {
             Logger.getLogger(AutorizadorCtl.class.getName()).log(Level.SEVERE, null, ex);
             status = false;

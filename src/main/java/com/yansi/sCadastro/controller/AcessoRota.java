@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.sound.midi.MidiDevice;
 import javax.sound.sampled.Line;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -73,7 +74,17 @@ public class AcessoRota {
             ArrayList<ModUsuario> arrayUser = new ArrayList<ModUsuario>();
             //arrayUser.add(modUser);
             return arrayUser;
-        }
+        }   
+    }
+    
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/exibicao/{token}")
+    public void getDeleteToken(@PathParam("token") String token) {
+        boolean status = false;
+        AutorizadorCtl autCtl = new AutorizadorCtl();
         
+        status = autCtl.deleteToken(token);
+           
     }
 }

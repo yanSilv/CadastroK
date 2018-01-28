@@ -5,17 +5,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
         <link href="css/estilo.css" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <link rel="shortcut icon" type="image/x-icon" href="imagens/fa.ico">
         <script type="text/javascript" src="js/angular.js"></script>
         <script type="text/javascript" src="js/angular-cookies.js"></script>
         <script type="text/javascript" src="js/apps.js"></script>
+        
     </head>
     <body ng-controller="cadUsuarioCtl">
         <!--Tag principal-->
         <div class="container">
             
             <!--Tag do login-->
-            <div class="col-md-6 central">
+            <div class="col-md-7 central">
                 <div class="text-primary">
                     <h3>Acesso ao Sistema</h3>
                 </div>
@@ -31,6 +34,10 @@
                         <a href="cadastro.html" class="btn btn-primary">Cadastrar</a>
                     </div>
                 </form>
+                
+                <input ng-change="setConfirmUnload(true)" ng-model="data"/>
+<button ng-click="saveData()">Save Data</button>
+<div ng-bind="data1"></div>
             </div>
             
         </div>
