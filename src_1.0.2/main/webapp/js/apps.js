@@ -1,10 +1,10 @@
-var app = angular.module("cadUsuario", ['ngCookies']);
+var app = angular.module("cadUsuario", []);
 
 app.value('urlBase', 'http://localhost:8084/sProdutos/rest/');
 
-app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cookies) {
+app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase) {
     $scope.login = {id: "", nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: ""};
-    $scope.usuario = {usuario: "", token: ""};
+    $scope.usuario = {id: "", nome: "", idade: "", endereco: "", telefone: ""};
     $scope.cad = {nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: ""};
     $scope.listUses = [];
 
@@ -13,15 +13,15 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
             url: urlBase + "acessologin",
             data: login
         }).then(function (response) {
+            console.log(response.data);
+            $scope.usuario.id = response.data.id;
             
-            $scope.usuario = response.data;
+            console.log($scope.usuario.id);
             
-            if ($scope.usuario.usuario === "0") {
+            if ($scope.usuario.id === 0) {
                 console.log("Usuario não encontrado");
             } else {
                 console.log("Usuario encontrado");
-                $cookies.put('cookie', $scope.usuario.token);
-                $cookies.put('user', $scope.usuario.usuario);
                 $window.location.href = 'exibicao.html';
             }
         });
@@ -50,20 +50,11 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
     $scope.exibeUsuarios = function(){
         
         $http({method: 'GET',
-            url: urlBase + "acessologin/exibicao/"+$cookies.get('cookie')
+            url: urlBase + "acessologin/exibicao"
         }).then(function (response) {
             
-            console.log(response.data.length);
-            if ((response.data.length === 0)) {
-                console.log("Token invalido");
-                $window.location.href = 'index.html';
-            } else {
-                console.log(response.data);
-                $scope.listUses = response.data;
-                $scope.usuario.nome = $cookies.get('user');
-                console.log($cookies.get('cookie'));
-            }
-            
+            console.log(response.data);
+            $scope.listUses = response.data;
             /*if (status === "true") {
                 console.log("Usuario encontrado");
                 $window.location.href = 'index.html';
