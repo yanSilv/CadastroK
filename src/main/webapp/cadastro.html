@@ -19,16 +19,16 @@ and open the template in the editor.
         <script type="text/javascript" src="js/apps.js"></script>
     </head>
     <body ng-controller="cadUsuarioCtl">
-        
+
         <div class="container">
             <div class="col-md-7 central">
                 <div class="text-primary">
                     <h3>Cadastro de Usuario</h3>
                 </div>
                 <form name="cadastroUser">
-                    
+
                     <div class="form-group">
-                        Nome:  <input type="text" class="form-control" placeholder="Nome" ng-model="cad.nome">
+                        Nome:  <input type="text" class="form-control" placeholder="Nome" name="nome" ng-model="cad.nome" ng-required="true">
                     </div>
                     <div class="form-group">
                         Idade: <input type="number" class="form-control" placeholder="Idade" ng-model="cad.idade">
@@ -40,20 +40,35 @@ and open the template in the editor.
                         Telefone: <input type="number" class="form-control" placeholder="Telefone" ng-model="cad.telefone">
                     </div>
                     <div class="form-group">
-                        Usuario: <input type="text" class="form-control" placeholder="Usuario" ng-model="cad.usuario">
+                        Usuario: <input type="text" class="form-control" placeholder="Usuario" name="usuario" ng-model="cad.usuario" ng-required="true">
                     </div>
                     <div class="form-group">
-                        Senha: <input type="number" class="form-control" placeholder="Senha" ng-model="cad.senha">
+                        Senha: <input type="password" class="form-control" placeholder="Senha" name="senha" ng-model="cad.senha" ng-required="true">
                     </div>
                     <div class="form-group">
-                        <label id="Cadastrar" class="btn btn-primary" ng-click="enviadados(cad)">Cadastrar</label>
-                        <a href="index.html" class="btn btn-primary" >Cancelar</a>
+                        Confirma Senha : <input type="password" class="form-control" placeholder="Confirma Senha" name="consenha" ng-model="conSenha" ng-required="true" ng-bind="confirmaSenha(cad.senha, conSenha)">
                     </div>
-                    
                 </form>
-                
+                <div class="form-group">
+                    <label id="Cadastrar" class="btn btn-primary" ng-click="enviadados(cad)" ng-disabled="cadastroUser.$invalid">Cadastrar</label>
+                    <a href="index.html" class="btn btn-primary" >Cancelar</a>
+                </div>
+                <div ng-show="cadastroUser.nome.$invalid && cadastroUser.nome.$dirty" class="alert alert-danger">
+                    Por favor, preencha o campo Nome.
+                </div>
+                <div ng-show="cadastroUser.usuario.$invalid && cadastroUser.usuario.$dirty" class="alert alert-danger">
+                    Por favor, preencha o campo usuario.
+                </div>
+                <div ng-show="cadastroUser.senha.$invalid && cadastroUser.senha.$dirty" class="alert alert-danger">
+                    Por favor, preencha o campo senha.
+                </div>
+                <div ng-show="cadastroUser.consenha.$invalid && cadastroUser.consenha.$dirty" class="alert alert-danger">
+                    Por favor, preencha o campo Confirma Senha.
+                </div>
+                <div ng-show="cadastroUser.consenha.$valid && checkout" class="alert alert-danger">
+                    Senhas não confere, favor verificar
+                </div> 
             </div>
-            
         </div>
     </body>
 </html>

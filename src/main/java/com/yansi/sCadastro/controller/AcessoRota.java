@@ -51,8 +51,8 @@ public class AcessoRota {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/cadastro")
-    public boolean getCadastroUsuario(ModUsuario modUsuario) {
-        boolean status = false;
+    public String getCadastroUsuario(ModUsuario modUsuario) {
+        String status = "";
         UsuarioCtl useCtl = new UsuarioCtl();
 
         status = useCtl.cadastroUsuario(modUsuario);
@@ -79,7 +79,7 @@ public class AcessoRota {
     
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/exibicao/{token}")
+    @Path("/delete/{token}")
     public void getDeleteToken(@PathParam("token") String token) {
         boolean status = false;
         AutorizadorCtl autCtl = new AutorizadorCtl();

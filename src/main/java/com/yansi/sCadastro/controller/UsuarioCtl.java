@@ -45,36 +45,39 @@ public class UsuarioCtl {
 
     }
 
-    boolean cadastroUsuario(ModUsuario modUsuario) {
-        boolean status = false;
+    String cadastroUsuario(ModUsuario modUsuario) {
+        String status = "S";
         UsuarioDAO daoUse = new UsuarioDAO();
         
         //Verifica se usuario não esta em branco
         if (modUsuario.getUsuario().equals(null) || modUsuario.getUsuario().length() > 45) {
-            return status;
+            return "V";
         }
 
         //Verifica se a senha não está em branco 
         if (modUsuario.getSenha().equals(null)) {
-            return status;
+            return "V";
         }
 
         if (modUsuario.getNome().equals(null) || modUsuario.getNome().length() > 200) {
-            return status;
+            return "V";
         }
         
         if ( modUsuario.getEndereco().length() > 200 || modUsuario.getTelefone().length() > 20) {
-            return status;
+            return "V";
         }
         
         try {
-            
-            daoUse.adiciona(modUsuario);
-            status = true;
+            if (daoUse.validaUsuario(modUsuario)) {
+                status = "C";
+            } else {
+                daoUse.adiciona(modUsuario);
+                status = "A";
+            }
                     
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
-            status = false;
+            status = "S";
         }
 
         return status;

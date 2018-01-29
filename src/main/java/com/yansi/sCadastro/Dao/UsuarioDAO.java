@@ -125,4 +125,28 @@ public class UsuarioDAO {
         
         ps.executeUpdate();
     }
+
+    public boolean validaUsuario(ModUsuario modUsuario) throws SQLException {
+        boolean status = false;
+        
+        Conexao conn = new Conexao();
+        PreparedStatement ps;
+        
+        String sql = "SELECT * FROM tb_usuario "
+                + "WHERE usuario = ?";
+        
+        ps = conn.getConexao().prepareStatement(sql);
+        
+        ps.setString(1, modUsuario.getUsuario());
+        
+        ResultSet rs;
+        
+        rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            status = true;
+        }
+        
+        return status;
+    }
 }
