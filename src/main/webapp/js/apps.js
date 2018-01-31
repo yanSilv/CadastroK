@@ -1,14 +1,15 @@
 var app = angular.module("cadUsuario", ['ngCookies']);
 
-app.value('urlBase', 'http://localhost:8080/sProdutos/rest/');
+app.value('urlBase', 'http://localhost:8084/sProdutos/rest/');
 
 app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cookies) {
-    $scope.login = {id: "", nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: ""};
+    $scope.login = {id: "", nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: ""};
     $scope.conSenha = "";
     $scope.checkout = false;
-    $scope.usuario = {usuario: "", token: ""};
-    $scope.cad = {nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: ""};
+    $scope.usuario = {usuario: "", token: "", status: ""};
+    $scope.cad = {nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: "visitante"};
     $scope.listUses = [];
+    $scope.listStatus = [{ADM: "Admiinitrador", VIS: "Visitante", FUN: "Funcionario"}];
 
     //Irá chamar o metodo para closeApp assim que a pagina for fechada
     //Garantido que o usuario não fique logado
@@ -31,6 +32,7 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
             } else {
                 $cookies.put('cookie', $scope.usuario.token);
                 $cookies.put('user', $scope.usuario.usuario);
+                $cookies.put('status', $scope.usuario.status);
                 $window.location.href = 'exibicao.html';
             }
         });
@@ -51,8 +53,25 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
             } else {
                 $cookies.put('cookie', $scope.usuario.token);
                 $cookies.put('user', $scope.usuario.usuario);
-                $scope.usuario.nome = $cookies.get('user');
-                //$window.location.href = 'exibicao.html';
+                $cookies.put('status', $scope.usuario.status);
+                for (var i = 0; i < $scope.listStatus.length; i++) {
+                    if ( $cookies.get('status') === $scope.listStatus[i].ADM) {
+                        $scope.usuario.nome = $scope.listStatus[i].ADM +":"+ $cookies.get('user');
+                        break;
+                    }
+                    if ( $cookies.get('status') === $scope.listStatus[i].FUN) {
+                        $scope.usuario.nome = $scope.listStatus[i].FUN +":"+ $cookies.get('user');
+                        break;
+                    }
+                    if ( $cookies.get('status') === $scope.listStatus[i].VIS) {
+                        $scope.usuario.nome = $scope.listStatus[i].VIS +":"+ $cookies.get('user');
+                        break;
+                    }
+                    if ( $cookies.get('status') === "null") {
+                        $scope.usuario.nome = $scope.listStatus[i].VIS +":"+ $cookies.get('user');
+                        break;
+                    }
+                }
             }
         });
     };
@@ -97,7 +116,26 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
                 $window.location.href = 'index.html';
             } else {
                 $scope.listUses = response.data;
-                $scope.usuario.nome = $cookies.get('user');
+          
+                for (var i = 0; i < $scope.listStatus.length; i++) {
+                    if ( $cookies.get('status') === $scope.listStatus[i].ADM) {
+                        $scope.usuario.nome = $scope.listStatus[i].ADM +":"+ $cookies.get('user');
+                        break;
+                    }
+                    if ( $cookies.get('status') === $scope.listStatus[i].FUN) {
+                        $scope.usuario.nome = $scope.listStatus[i].FUN +":"+ $cookies.get('user');
+                        break;
+                    }
+                    if ( $cookies.get('status') === $scope.listStatus[i].VIS) {
+                        $scope.usuario.nome = $scope.listStatus[i].VIS +":"+ $cookies.get('user');
+                        break;
+                    }
+                    if ( $cookies.get('status') === "null") {
+                        $scope.usuario.nome = $scope.listStatus[i].VIS +":"+ $cookies.get('user');
+                        break;
+                    }
+                }
+                
             }
         });
     };

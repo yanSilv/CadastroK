@@ -4,8 +4,6 @@ import com.yansi.sCadastro.Modelo.ModUsuario;
 import com.yansi.sCadastro.Modelo.ModToken;
 import com.yansi.sCadastro.util.JwtUtil;
 import java.util.ArrayList;
-import javax.sound.midi.MidiDevice;
-import javax.sound.sampled.Line;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -13,9 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
 
 @Path("acessologin")
 public class AcessoRota {
@@ -40,7 +36,7 @@ public class AcessoRota {
             if (autCtl.salvaToken(modUse, token)) {
                 modToken.setToken(token);
                 modToken.setUsuario(modUse.getNome());
-
+                modToken.setStatus(modUse.getStatus()); 
             }
         }
 

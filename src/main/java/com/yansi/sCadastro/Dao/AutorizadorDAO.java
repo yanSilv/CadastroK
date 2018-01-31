@@ -21,12 +21,13 @@ public class AutorizadorDAO {
         Conexao conn = new Conexao();
         PreparedStatement ps;
         
-        String sql = "insert into tb_token(id_user, token) "
-                + "values (?,?)";
+        String sql = "insert into tb_token(id_user, token, status) "
+                + "values (?,?,?)";
         ps =  conn.getConexao().prepareStatement(sql);
         
         ps.setInt(1, modUsuario.getId());
         ps.setString(2, token);
+        ps.setString(3, modUsuario.getStatus());
         
         ps.execute();
     }
@@ -52,9 +53,11 @@ public class AutorizadorDAO {
         if(rs.next()) {
             modUse.setUsuario(rs.getString("id_user"));
             modUse.setToken(rs.getString("token"));
+            modUse.setStatus(rs.getString("status"));
         } else {
             modUse.setUsuario("null");
             modUse.setToken("null");
+            modUse.setStatus("null");
         }
         
         return modUse;
@@ -66,7 +69,7 @@ public class AutorizadorDAO {
         
         String sql = "DELETE FROM tb_token "
                 + "WHERE token = ? ;";
-        System.out.println("LINHA 69 "+token);
+        
         PreparedStatement ps;
         
         ps = conn.getConexao().prepareStatement(sql);

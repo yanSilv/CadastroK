@@ -48,6 +48,7 @@ public class UsuarioDAO {
             modUse.setIdade(rs.getInt("idade"));
             modUse.setUsuario(rs.getString("usuario"));
             modUse.setSenha(rs.getString("senha"));
+            modUse.setStatus(rs.getString("status"));
             
         }
         
@@ -58,8 +59,8 @@ public class UsuarioDAO {
         Conexao conn = new Conexao();
         PreparedStatement ps;
         
-        String sql = "insert into tb_usuario(nome, endereco, telefone, idade, usuario, senha) "
-                + "values (?,?,?,?,?,?)";
+        String sql = "insert into tb_usuario(nome, endereco, telefone, idade, usuario, senha, status) "
+                + "values (?,?,?,?,?,?,?)";
         ps =  conn.getConexao().prepareStatement(sql);
         
         ps.setString(1, modUsuario.getNome());
@@ -68,6 +69,7 @@ public class UsuarioDAO {
         ps.setInt(4, modUsuario.getIdade());
         ps.setString(5, modUsuario.getUsuario());
         ps.setString(6, modUsuario.getSenha());
+        ps.setString(7, modUsuario.getStatus());
         
         ps.execute();
     }
@@ -98,6 +100,7 @@ public class UsuarioDAO {
             cadastro.setIdade(rs.getInt("idade"));
             cadastro.setUsuario(rs.getString("usuario"));
             cadastro.setSenha(rs.getString("senha"));
+            cadastro.setStatus(rs.getString("status"));
             
             lista.add(cadastro);
             
@@ -106,12 +109,28 @@ public class UsuarioDAO {
         return lista;
     }
     
+    public void editarFunc (ModUsuario modUsuario) throws SQLException {
+        Conexao conn = new Conexao();
+        PreparedStatement ps;
+        
+        String sql = "UPDATE tb_usuario "
+                + "SET endereco = ?, telefone = ? "
+                + "WHERE id_user = ?";
+        ps =  conn.getConexao().prepareStatement(sql);
+        
+        ps.setString(1, modUsuario.getEndereco());
+        ps.setString(2, modUsuario.getTelefone());
+        ps.setInt(3, modUsuario.getId());
+        
+        ps.executeUpdate();
+    }
+    
     public void editar (ModUsuario modUsuario) throws SQLException {
         Conexao conn = new Conexao();
         PreparedStatement ps;
         
         String sql = "UPDATE tb_usuario "
-                + "SET nome = ?, endereco = ?, telefone = ?, idade = ?, usuario = ?, senha = ? "
+                + "SET nome = ?, endereco = ?, telefone = ?, idade = ?, usuario = ?, senha = ?, status "
                 + "WHERE id_user = ?";
         ps =  conn.getConexao().prepareStatement(sql);
         
@@ -121,7 +140,8 @@ public class UsuarioDAO {
         ps.setInt(4, modUsuario.getIdade());
         ps.setString(5, modUsuario.getUsuario());
         ps.setString(6, modUsuario.getSenha());
-        ps.setInt(7, modUsuario.getId());
+        ps.setString(7, modUsuario.getStatus());
+        ps.setInt(8, modUsuario.getId());
         
         ps.executeUpdate();
     }

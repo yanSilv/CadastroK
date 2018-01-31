@@ -13,6 +13,7 @@ public class ModUsuario {
     private String telefone;
     private String usuario;
     private String senha;
+    private String status;
 
     public String getNome() {
         return nome;
@@ -69,5 +70,12 @@ public class ModUsuario {
     public void setId(int id) {
         this.id = id;
     }
-    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

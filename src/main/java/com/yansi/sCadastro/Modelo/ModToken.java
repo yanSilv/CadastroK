@@ -13,6 +13,15 @@ public class ModToken {
     
     private String usuario;
     private String token;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getUsuario() {
         return usuario;
