@@ -10,6 +10,9 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
     $scope.cad = {nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: "visitante"};
     $scope.listUses = [];
     $scope.listStatus = [{ADM: "Admiinitrador", VIS: "Visitante", FUN: "Funcionario"}];
+    $scope.formStatus = false;
+    $scope.formCadastro = false;
+    $scope.formExibicao = false;
 
     //Irá chamar o metodo para closeApp assim que a pagina for fechada
     //Garantido que o usuario não fique logado
@@ -54,6 +57,7 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
                 $cookies.put('cookie', $scope.usuario.token);
                 $cookies.put('user', $scope.usuario.usuario);
                 $cookies.put('status', $scope.usuario.status);
+                $scope.formExibicao = true;
                 for (var i = 0; i < $scope.listStatus.length; i++) {
                     if ( $cookies.get('status') === $scope.listStatus[i].ADM) {
                         $scope.usuario.nome = $scope.listStatus[i].ADM +":"+ $cookies.get('user');
@@ -116,9 +120,9 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
                 $window.location.href = 'index.html';
             } else {
                 $scope.listUses = response.data;
-          
+                $scope.formExibicao = true;
                 for (var i = 0; i < $scope.listStatus.length; i++) {
-                    if ( $cookies.get('status') === $scope.listStatus[i].ADM) {
+                    if ( $cookies.get('status') === $scope.listStatus[i].ADM) { 
                         $scope.usuario.nome = $scope.listStatus[i].ADM +":"+ $cookies.get('user');
                         break;
                     }
@@ -138,6 +142,36 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
                 
             }
         });
+    };
+    
+    $scope.selecionaUsuario = function (userSelect) {
+        
+        console.log(userSelect);
+        for (var i = 0; i < $scope.listStatus.length; i++) {
+            console.log("Olá");
+            console.log($cookies.get('status'));
+            if ( $cookies.get('status') === $scope.listStatus[0].VIS || $cookies.get('status') === "null") {
+                $scope.formStatus = false;
+                $scope.formCadastro = false;
+                $scope.formExibicao = true;
+                return ;
+            }
+
+            if ( $cookies.get('status') === $scope.listStatus[0].ADM) { 
+                console.log("É um ADM");
+                $scope.formStatus = true;
+                $scope.formCadastro = true;
+                $scope.formExibicao = false;
+                break;
+            }
+            if ( $cookies.get('status') === $scope.listStatus[0].FUN) {
+                console.log("É um funcionario");
+                $scope.formStatus = false;
+                $scope.formCadastro = true;
+                $scope.formExibicao = false;
+                break;
+            }
+        }
     };
 
     $scope.closeApp = function () {

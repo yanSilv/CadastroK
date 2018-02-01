@@ -33,24 +33,24 @@ and open the template in the editor.
                             <li class="" ng-click="closeApp()"><a href="">Sair</a></li>
                         </ul>
                     </nav>
-
-                    <table class="table text-primary">
-                        <thead>
-                        <th>Nome</th>
-                        <th>Idade</th>
-                        <th>Endereço</th>
-                        <th>Telefone</th>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat = "listUse in listUses">
-                                <td>{{listUse.nome}}</td>
-                                <td>{{listUse.idade}}</td>
-                                <td>{{listUse.endereco}}</td>
-                                <td>{{listUse.telefone}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                    <div ng-show="formExibicao">
+                        <table class="table table-striped table-hover text-primary">
+                            <thead>  
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Endereço</th>
+                            <th>Telefone</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat = "listUse in listUses" ng-click="selecionaUsuario(listUse)">
+                                    <td>{{listUse.nome}}</td>
+                                    <td>{{listUse.idade}}</td>
+                                    <td>{{listUse.endereco}}</td>
+                                    <td>{{listUse.telefone}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <!-- Modal -->
                     <div class="modal fade" id="login">
                         <div class="modal-dialog">
@@ -78,6 +78,60 @@ and open the template in the editor.
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div ng-show="formCadastro">
+                        <div class="text-primary">
+                            <h3>Cadastro de Usuario</h3>
+                        </div>
+                        <form name="cadastroUser">
+
+                            <div class="form-group">
+                                Nome:  <input type="text" class="form-control" placeholder="Nome" name="nome" ng-model="cad.nome" ng-required="true">
+                            </div>
+                            <div class="form-group">
+                                Idade: <input type="number" class="form-control" placeholder="Idade" ng-model="cad.idade">
+                            </div>
+                            <div class="form-group">
+                                Endereco: <input type="text" class="form-control" placeholder="Endereço" ng-model="cad.endereco">
+                            </div>
+                            <div class="form-group">
+                                Telefone: <input type="number" class="form-control" placeholder="Telefone" ng-model="cad.telefone">
+                            </div>
+                            <div class="form-group">
+                                Usuario: <input type="text" class="form-control" placeholder="Usuario" name="usuario" ng-model="cad.usuario" ng-required="true">
+                            </div>
+                            <div class="form-group">
+                                Senha: <input type="password" class="form-control" placeholder="Senha" name="senha" ng-model="cad.senha" ng-required="true">
+                            </div>
+                            <div class="form-group">
+                                Confirma Senha : <input type="password" class="form-control" placeholder="Confirma Senha" name="consenha" ng-model="conSenha" ng-required="true" ng-bind="confirmaSenha(cad.senha, conSenha)">
+                            </div>
+                            <div ng-show="formStatus">
+                                <div class="form-group">
+                                    Confirma Senha : <input type="password" class="form-control" placeholder="Confirma Senha" name="consenha" ng-model="conSenha" ng-required="true" ng-bind="confirmaSenha(cad.senha, conSenha)">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <label id="Cadastrar" class="btn btn-primary" ng-click="enviadados(cad)" ng-disabled="cadastroUser.$invalid">Cadastrar</label>
+                            <a href="index.html" class="btn btn-primary" >Cancelar</a>
+                        </div>
+                        <div ng-show="cadastroUser.nome.$invalid && cadastroUser.nome.$dirty" class="alert alert-danger">
+                            Por favor, preencha o campo Nome.
+                        </div>
+                        <div ng-show="cadastroUser.usuario.$invalid && cadastroUser.usuario.$dirty" class="alert alert-danger">
+                            Por favor, preencha o campo usuario.
+                        </div>
+                        <div ng-show="cadastroUser.senha.$invalid && cadastroUser.senha.$dirty" class="alert alert-danger">
+                            Por favor, preencha o campo senha.
+                        </div>
+                        <div ng-show="cadastroUser.consenha.$invalid && cadastroUser.consenha.$dirty" class="alert alert-danger">
+                            Por favor, preencha o campo Confirma Senha.
+                        </div>
+                        <div ng-show="cadastroUser.consenha.$valid && checkout" class="alert alert-danger">
+                            Senhas não confere, favor verificar
+                        </div> 
                     </div>
                 </div>
             </div>
