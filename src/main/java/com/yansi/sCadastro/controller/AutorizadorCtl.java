@@ -5,18 +5,19 @@
  */
 package com.yansi.sCadastro.controller;
 
-import com.yansi.sCadastro.Dao.AutorizadorDAO;
-import com.yansi.sCadastro.Modelo.ModToken;
-import com.yansi.sCadastro.Modelo.ModUsuario;
+import com.yansi.sCadastro.dao.AutorizadorDAO;
+import com.yansi.sCadastro.modelo.ModToken;
+import com.yansi.sCadastro.modelo.ModUsuario;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
  * @author yansi
  */
 public class AutorizadorCtl {
+    
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AutorizadorCtl.class.getName());
 
     boolean salvaToken(ModUsuario modUse, String token) {
         boolean status;
@@ -28,7 +29,7 @@ public class AutorizadorCtl {
             status = true;
 
         } catch (SQLException ex) {
-            Logger.getLogger(AutorizadorCtl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(AutorizadorCtl.class.getName() + " "+ ex);
             status = false;
         }
 
@@ -51,7 +52,7 @@ public class AutorizadorCtl {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(AutorizadorCtl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(AutorizadorCtl.class.getName() + " "+ ex);
             status = false;
         }
 
@@ -67,7 +68,7 @@ public class AutorizadorCtl {
             status = autDao.deleteToken(token);
            
         } catch (SQLException ex) {
-            Logger.getLogger(AutorizadorCtl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(AutorizadorCtl.class.getName() + " "+ ex);
             status = false;
         }
 

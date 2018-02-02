@@ -1,8 +1,8 @@
 package com.yansi.sCadastro.controller;
 
-import com.yansi.sCadastro.Modelo.ModCadToken;
-import com.yansi.sCadastro.Modelo.ModUsuario;
-import com.yansi.sCadastro.Modelo.ModToken;
+import com.yansi.sCadastro.modelo.ModCadToken;
+import com.yansi.sCadastro.modelo.ModUsuario;
+import com.yansi.sCadastro.modelo.ModToken;
 import com.yansi.sCadastro.util.JwtUtil;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -13,9 +13,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.apache.log4j.Logger;
 
 @Path("acessologin")
 public class AcessoRota {
+    
+    final static Logger logger = Logger.getLogger(AcessoRota.class.getName());
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,6 +33,8 @@ public class AcessoRota {
         modToken.setUsuario("0");
 
         modUse = useCtl.validaLogin(modUsuario);
+        
+        
 
         if (modUse.getId() != 0) {
             System.out.println(modUse.getUsuario());
@@ -39,6 +44,9 @@ public class AcessoRota {
                 modToken.setUsuario(modUse.getNome());
                 modToken.setStatus(modUse.getStatus()); 
             }
+            logger.info("A- Acesso ao sistema: "+ modUsuario.getUsuario());
+        } else {
+            logger.warn("T- Tesntativa de acessar o sistema: "+ modUsuario.getUsuario());
         }
 
         return modToken;
@@ -53,6 +61,8 @@ public class AcessoRota {
         UsuarioCtl useCtl = new UsuarioCtl();
 
         status = useCtl.cadastroUsuario(modUsuario);
+        
+        logger.info("C- Cadastro ao sistema: "+ modUsuario.getUsuario() +" Retorno " + status);
 
         return status;
     }
@@ -67,8 +77,13 @@ public class AcessoRota {
         String status;
         
         if (autCtl.validaToken(modUsuario.getUsuario().getToken())) {
+            
+            logger.info("E- "+modUsuario.getUsuario().getNome()+" Alterou dos dados do usuario "+ modUsuario.getCad().getUsuario());
+            
             status = useCtl.editarUsuario(modUsuario.getCad(), modUsuario.getUsuario().getStatus());
+        
         } else {
+            logger.warn("Ex- Token expirado"+ modUsuario.getUsuario().getNome());
             status = "i";
         }
                 
@@ -83,11 +98,12 @@ public class AcessoRota {
         AutorizadorCtl autCtl = new AutorizadorCtl();
         
         if (autCtl.validaToken(token)) {
+            logger.info("Co- consulta realizada com sucesso");
             return useCtl.exibicaoTotal();
         } else {
+            logger.info("CE- Nenhum usario cadastrado");
             ModUsuario modUser = new ModUsuario();
             ArrayList<ModUsuario> arrayUser = new ArrayList<ModUsuario>();
-            //arrayUser.add(modUser);
             return arrayUser;
         }   
     }
@@ -97,9 +113,11 @@ public class AcessoRota {
     @Path("/delete/{token}")
     public void getDeleteToken(@PathParam("token") String token) {
         boolean status = false;
+        
         AutorizadorCtl autCtl = new AutorizadorCtl();
         
         status = autCtl.deleteToken(token);
-           
+        
+        logger.info("S- usuario saiu do sistema");
     }
 }

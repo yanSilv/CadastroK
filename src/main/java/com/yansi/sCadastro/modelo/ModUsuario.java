@@ -1,5 +1,5 @@
 
-package com.yansi.sCadastro.Modelo;
+package com.yansi.sCadastro.modelo;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

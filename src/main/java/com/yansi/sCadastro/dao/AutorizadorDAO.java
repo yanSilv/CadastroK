@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.yansi.sCadastro.Dao;
+package com.yansi.sCadastro.dao;
 
-import com.yansi.sCadastro.Modelo.ModToken;
-import com.yansi.sCadastro.Modelo.ModUsuario;
+import com.yansi.sCadastro.modelo.ModToken;
+import com.yansi.sCadastro.modelo.ModUsuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

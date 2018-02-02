@@ -1,0 +1,13 @@
+Marcadores das mensagem.
+
+Toda mensagem do log irá começar com uma letra especifica para facilitar
+a identificação da mensagem na função.
+	* A-  Informa os usuarios que logaram no sistema.
+	* T-  Informa os usuarios que teram logar no sistema sem sucesso.
+	* C-  Informa os novos usuarios do sistema.
+	* E-  Informa quem alterou e qual foi o usuario alerado.
+	* Ex- Informa os tokens que tentaram alterar dados do usuario, mas
+estava com o token expirado.
+	* Co- Consulta realizada com sucesso.
+	* CE- Nenhum usuario encontrado.
+	* S-  Usuario saiu do sistema. 

@@ -5,13 +5,11 @@
  */
 package com.yansi.sCadastro.controller;
 
-import com.yansi.sCadastro.Dao.UsuarioDAO;
-import com.yansi.sCadastro.Modelo.ModUsuario;
+import com.yansi.sCadastro.dao.UsuarioDAO;
+import com.yansi.sCadastro.modelo.ModUsuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -19,12 +17,13 @@ import java.util.logging.Logger;
  */
 public class UsuarioCtl {
 
+    final static Logger logger = Logger.getLogger(UsuarioCtl.class.getName());
+
     ModUsuario validaLogin(ModUsuario modUsuario) {
         ModUsuario modUse = new ModUsuario();
         UsuarioDAO daoUse = new UsuarioDAO();
 
         //Verifica se usuario não esta em branco
-        System.out.println("Linha 25" + modUsuario.getUsuario());
         if (modUsuario.getUsuario().equals(null) || modUsuario.getUsuario().equals("")) {
             return modUse;
         }
@@ -38,7 +37,7 @@ public class UsuarioCtl {
             modUse = daoUse.login(modUsuario);
         } catch (SQLException ex) {
             System.out.println("Falha ao validaLogin");
-            Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(UsuarioCtl.class.getName() + " " + ex);
         }
 
         return modUse;
@@ -67,6 +66,25 @@ public class UsuarioCtl {
             return "V";
         }
 
+        if (modUsuario.getNome().length() > 200) {
+            modUsuario.setNome(modUsuario.getNome().substring(0, 199));
+        }
+        if (modUsuario.getEndereco().length() > 200) {
+            modUsuario.setEndereco(modUsuario.getEndereco().substring(0, 199));
+        }
+        if (modUsuario.getTelefone().length() > 20) {
+            modUsuario.setTelefone(modUsuario.getTelefone().substring(0, 19));
+        }
+        if (modUsuario.getUsuario().length() > 45) {
+            modUsuario.setUsuario(modUsuario.getUsuario().substring(0, 44));
+        }
+        if (modUsuario.getSenha().length() > 60) {
+            modUsuario.setSenha(modUsuario.getSenha().substring(0, 59));
+        }
+        if (modUsuario.getStatus().length() > 45) {
+            modUsuario.setStatus(modUsuario.getStatus().substring(0, 44));
+        }
+
         try {
             if (daoUse.validaUsuario(modUsuario)) {
                 status = "C";
@@ -76,7 +94,7 @@ public class UsuarioCtl {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(UsuarioCtl.class.getName() + " " + ex);
             status = "S";
         }
 
@@ -90,8 +108,8 @@ public class UsuarioCtl {
         try {
             modUser = userDao.lista();
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Erro ao retornar a lista de usuario");
+            logger.error(UsuarioCtl.class.getName() + " " + ex);
         }
 
         return modUser;
@@ -100,13 +118,33 @@ public class UsuarioCtl {
     String editarUsuario(ModUsuario modUsuario, String cargo) {
         String status = null;
         UsuarioDAO daoUse = new UsuarioDAO();
+
+        if (modUsuario.getNome().length() > 200) {
+            modUsuario.setNome(modUsuario.getNome().substring(0, 199));
+        }
+        if (modUsuario.getEndereco().length() > 200) {
+            modUsuario.setEndereco(modUsuario.getEndereco().substring(0, 199));
+        }
+        if (modUsuario.getTelefone().length() > 20) {
+            modUsuario.setTelefone(modUsuario.getTelefone().substring(0, 19));
+        }
+        if (modUsuario.getUsuario().length() > 45) {
+            modUsuario.setUsuario(modUsuario.getUsuario().substring(0, 44));
+        }
+        if (modUsuario.getSenha().length() > 60) {
+            modUsuario.setSenha(modUsuario.getSenha().substring(0, 59));
+        }
+        if (modUsuario.getStatus().length() > 45) {
+            modUsuario.setStatus(modUsuario.getStatus().substring(0, 44));
+        }
+
         try {
 
             daoUse.editar(modUsuario, cargo);
             status = "A";
 
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(UsuarioCtl.class.getName() + " " + ex);
             status = "S";
         }
         return status;
