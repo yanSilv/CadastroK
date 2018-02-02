@@ -14,6 +14,7 @@ public class ModToken {
     private String usuario;
     private String token;
     private String status;
+    private String nome;
 
     public String getStatus() {
         return status;
@@ -38,7 +39,12 @@ public class ModToken {
     public void setToken(String token) {
         this.token = token;
     }
-    
-    
-    
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

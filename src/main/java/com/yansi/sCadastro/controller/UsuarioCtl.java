@@ -24,7 +24,7 @@ public class UsuarioCtl {
         UsuarioDAO daoUse = new UsuarioDAO();
 
         //Verifica se usuario não esta em branco
-        System.out.println("Linha 25"+modUsuario.getUsuario());
+        System.out.println("Linha 25" + modUsuario.getUsuario());
         if (modUsuario.getUsuario().equals(null) || modUsuario.getUsuario().equals("")) {
             return modUse;
         }
@@ -48,7 +48,7 @@ public class UsuarioCtl {
     String cadastroUsuario(ModUsuario modUsuario) {
         String status = "S";
         UsuarioDAO daoUse = new UsuarioDAO();
-        
+
         //Verifica se usuario não esta em branco
         if (modUsuario.getUsuario().equals(null) || modUsuario.getUsuario().length() > 45) {
             return "V";
@@ -62,11 +62,11 @@ public class UsuarioCtl {
         if (modUsuario.getNome().equals(null) || modUsuario.getNome().length() > 200) {
             return "V";
         }
-        
-        if ( modUsuario.getEndereco().length() > 200 || modUsuario.getTelefone().length() > 20) {
+
+        if (modUsuario.getEndereco().length() > 200 || modUsuario.getTelefone().length() > 20) {
             return "V";
         }
-        
+
         try {
             if (daoUse.validaUsuario(modUsuario)) {
                 status = "C";
@@ -74,7 +74,7 @@ public class UsuarioCtl {
                 daoUse.adiciona(modUsuario);
                 status = "A";
             }
-                    
+
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
             status = "S";
@@ -84,16 +84,31 @@ public class UsuarioCtl {
     }
 
     ArrayList<ModUsuario> exibicaoTotal() {
-        ArrayList<ModUsuario> modUser= new ArrayList<ModUsuario>();
+        ArrayList<ModUsuario> modUser = new ArrayList<ModUsuario>();
         UsuarioDAO userDao = new UsuarioDAO();
-        
+
         try {
             modUser = userDao.lista();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Erro ao retornar a lista de usuario");
         }
-        
+
         return modUser;
+    }
+
+    String editarUsuario(ModUsuario modUsuario, String cargo) {
+        String status = null;
+        UsuarioDAO daoUse = new UsuarioDAO();
+        try {
+
+            daoUse.editar(modUsuario, cargo);
+            status = "A";
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioCtl.class.getName()).log(Level.SEVERE, null, ex);
+            status = "S";
+        }
+        return status;
     }
 }

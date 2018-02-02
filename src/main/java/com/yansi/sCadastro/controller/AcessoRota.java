@@ -1,5 +1,6 @@
 package com.yansi.sCadastro.controller;
 
+import com.yansi.sCadastro.Modelo.ModCadToken;
 import com.yansi.sCadastro.Modelo.ModUsuario;
 import com.yansi.sCadastro.Modelo.ModToken;
 import com.yansi.sCadastro.util.JwtUtil;
@@ -53,6 +54,24 @@ public class AcessoRota {
 
         status = useCtl.cadastroUsuario(modUsuario);
 
+        return status;
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/edidatUsario")
+    public String getEditarUsuario(ModCadToken modUsuario) {
+        UsuarioCtl useCtl = new UsuarioCtl();
+        AutorizadorCtl autCtl = new AutorizadorCtl();
+        String status;
+        
+        if (autCtl.validaToken(modUsuario.getUsuario().getToken())) {
+            status = useCtl.editarUsuario(modUsuario.getCad(), modUsuario.getUsuario().getStatus());
+        } else {
+            status = "i";
+        }
+                
         return status;
     }
 

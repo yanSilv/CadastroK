@@ -82,40 +82,35 @@ and open the template in the editor.
 
                     <div ng-show="formCadastro">
                         <div class="text-primary">
-                            <h3>Cadastro de Usuario</h3>
+                            <h3>Editar dados Usuario</h3>
                         </div>
                         <form name="cadastroUser">
-
-                            <div class="form-group">
-                                Nome:  <input type="text" class="form-control" placeholder="Nome" name="nome" ng-model="cad.nome" ng-required="true">
-                            </div>
-                            <div class="form-group">
-                                Idade: <input type="number" class="form-control" placeholder="Idade" ng-model="cad.idade">
+                            <div ng-show="formFunc">
+                                <div class="form-group">
+                                    Nome:  <input type="text" class="form-control" placeholder="Nome" name="nome" ng-model="cad.nome" ng-required="true">
+                                </div>
+                                <div class="form-group">
+                                    Idade: <input type="text" class="form-control" placeholder="Idade" ng-model="cad.idade">
+                                </div>
                             </div>
                             <div class="form-group">
                                 Endereco: <input type="text" class="form-control" placeholder="Endereço" ng-model="cad.endereco">
                             </div>
                             <div class="form-group">
-                                Telefone: <input type="number" class="form-control" placeholder="Telefone" ng-model="cad.telefone">
-                            </div>
-                            <div class="form-group">
-                                Usuario: <input type="text" class="form-control" placeholder="Usuario" name="usuario" ng-model="cad.usuario" ng-required="true">
-                            </div>
-                            <div class="form-group">
-                                Senha: <input type="password" class="form-control" placeholder="Senha" name="senha" ng-model="cad.senha" ng-required="true">
-                            </div>
-                            <div class="form-group">
-                                Confirma Senha : <input type="password" class="form-control" placeholder="Confirma Senha" name="consenha" ng-model="conSenha" ng-required="true" ng-bind="confirmaSenha(cad.senha, conSenha)">
+                                Telefone: <input type="text" class="form-control" placeholder="Telefone" ng-model="cad.telefone">
                             </div>
                             <div ng-show="formStatus">
                                 <div class="form-group">
-                                    Confirma Senha : <input type="password" class="form-control" placeholder="Confirma Senha" name="consenha" ng-model="conSenha" ng-required="true" ng-bind="confirmaSenha(cad.senha, conSenha)">
+                                    Função :
+                                    <select class="form-control" name="cargo" id="cargo" ng-model="cad.status">
+                                        <option ng-repeat="option in ComoboBox" value="{{option.name}}">{{option.name}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </form>
                         <div class="form-group">
-                            <label id="Cadastrar" class="btn btn-primary" ng-click="enviadados(cad)" ng-disabled="cadastroUser.$invalid">Cadastrar</label>
-                            <a href="index.html" class="btn btn-primary" >Cancelar</a>
+                            <label id="Cadastrar" class="btn btn-primary" ng-click="editaUsuario(cad, usuario)" ng-disabled="cadastroUser.$invalid">Editar</label>
+                            <label class="btn btn-primary" ng-click="exibeUsuarios()" >Cancelar</label>
                         </div>
                         <div ng-show="cadastroUser.nome.$invalid && cadastroUser.nome.$dirty" class="alert alert-danger">
                             Por favor, preencha o campo Nome.

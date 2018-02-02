@@ -1,23 +1,36 @@
 var app = angular.module("cadUsuario", ['ngCookies']);
 
-app.value('urlBase', 'http://localhost:8084/sProdutos/rest/');
+app.value('urlBase', 'http://localhost:8080/sProdutos/rest/');
 
 app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cookies) {
     $scope.login = {id: "", nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: ""};
     $scope.conSenha = "";
     $scope.checkout = false;
     $scope.usuario = {usuario: "", token: "", status: ""};
-    $scope.cad = {nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: "visitante"};
+    $scope.cad = {nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: "Visitante"};
     $scope.listUses = [];
+    $scope.ComoboBox = [
+        {id: '1', name: "Admiinitrador"}, 
+        {id: '2', name: "Visitante"},
+        {id: '3', name: "Funcionario"}
+    ];
     $scope.listStatus = [{ADM: "Admiinitrador", VIS: "Visitante", FUN: "Funcionario"}];
-    $scope.formStatus = false;
-    $scope.formCadastro = false;
-    $scope.formExibicao = false;
+    //Bloqueia os campos que o funcionario não pode alterar
+    $scope.formFunc = false;    
+    
+    //Exibe o campo função, para alteração do cargo
+    $scope.formStatus = false;  
+    
+    //Exibe o formulario de cadastro.
+    $scope.formCadastro = false; 
+    
+    //Exibe os funcionarios cadastrados
+    $scope.formExibicao = false; 
 
     //Irá chamar o metodo para closeApp assim que a pagina for fechada
     //Garantido que o usuario não fique logado
     $scope.setConfirmUnload = function (on) {
-        window.onbeforeunload = (on) ? $scope.closeApp : null;
+        //window.onbeforeunload = (on) ? $scope.closeApp : null;
     };
 
     $scope.logarUser = function (login) {
@@ -104,6 +117,29 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
         });
 
     };
+    
+    $scope.editaUsuario = function (cad, usuario) {
+        var status;
+        
+        usuario.status = $cookies.get('status');
+        usuario.token  = $cookies.get('cookie');
+        
+        $http({method: 'POST',
+            url: urlBase + "acessologin/edidatUsario",
+            data: {cad, usuario}
+        }).then(function (response) {
+            status = response.data;
+
+            console.log(status);
+            if (status === "A") {
+                $window.window.alert("Usuario alterado com sucesso");
+                $scope.exibeUsuarios();
+            } else if (status === "V") {
+                $window.window.alert("Favor preencher todos os campos do formulário antes de enviar");
+            }
+        });
+
+    };
 
     $scope.exibeUsuarios = function () {
         console.log($cookies.get('cookie'));
@@ -120,6 +156,9 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
                 $window.location.href = 'index.html';
             } else {
                 $scope.listUses = response.data;
+                $scope.formFunc = false; 
+                $scope.formStatus = false;
+                $scope.formCadastro = false;
                 $scope.formExibicao = true;
                 for (var i = 0; i < $scope.listStatus.length; i++) {
                     if ( $cookies.get('status') === $scope.listStatus[i].ADM) { 
@@ -147,10 +186,12 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
     $scope.selecionaUsuario = function (userSelect) {
         
         console.log(userSelect);
+        $scope.cad = userSelect;
         for (var i = 0; i < $scope.listStatus.length; i++) {
             console.log("Olá");
             console.log($cookies.get('status'));
             if ( $cookies.get('status') === $scope.listStatus[0].VIS || $cookies.get('status') === "null") {
+                $scope.formFunc = false; 
                 $scope.formStatus = false;
                 $scope.formCadastro = false;
                 $scope.formExibicao = true;
@@ -159,6 +200,7 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
 
             if ( $cookies.get('status') === $scope.listStatus[0].ADM) { 
                 console.log("É um ADM");
+                $scope.formFunc = true; 
                 $scope.formStatus = true;
                 $scope.formCadastro = true;
                 $scope.formExibicao = false;
@@ -166,6 +208,7 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
             }
             if ( $cookies.get('status') === $scope.listStatus[0].FUN) {
                 console.log("É um funcionario");
+                $scope.formFunc = false; 
                 $scope.formStatus = false;
                 $scope.formCadastro = true;
                 $scope.formExibicao = false;

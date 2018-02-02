@@ -1,0 +1,7 @@
+Para o cadastro de usuario.
+	* o login terá que ser unico.
+	Flags.
+	* A - aprovado
+	* C - cadastrado
+	* V - Vazio.
+	* S - sem usuario
