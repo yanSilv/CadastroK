@@ -9,6 +9,7 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
     $scope.usuario = {usuario: "", token: "", status: ""};
     $scope.cad = {nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: "Visitante"};
     $scope.listUses = [];
+    $scope.listNoti = [];
     $scope.ComoboBox = [
         {id: '1', name: "Admiinitrador"}, 
         {id: '2', name: "Visitante"},
@@ -147,7 +148,9 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
             $window.location.href = 'index.html';
             return;
         }
-
+        
+        $scope.exibeNoticia();
+        
         $http({method: 'GET',
             url: urlBase + "acessologin/exibicao/" + $cookies.get('cookie')
         }).then(function (response) {
@@ -179,6 +182,21 @@ app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cook
                     }
                 }
                 
+            }
+        });
+    };
+    
+    
+    $scope.exibeNoticia = function () {
+        console.log("Noticia.")
+        $http({method: 'GET',
+            url: urlBase + "acessologin/noticia/" + $cookies.get('cookie')
+        }).then(function (response) {
+            console.log(response.data);
+            if ((response.data.length === 0)) {
+                $scope.listNoti.conteudo = "Sem noticia";
+            } else {
+                $scope.listNoti = response.data;
             }
         });
     };

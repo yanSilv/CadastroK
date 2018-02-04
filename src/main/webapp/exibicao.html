@@ -33,7 +33,25 @@ and open the template in the editor.
                             <li class="" ng-click="closeApp()"><a href="">Sair</a></li>
                         </ul>
                     </nav>
+                    <div>
+                        <h5>Noticias</h5>
+                        <table class="table table-striped table-hover text-primary">
+                            <thead>  
+                            <th>Data</th>
+                            <th>Titulo</th>
+                            <th>Notícia</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat = "listNot in listNoti">
+                                    <td>{{listNot.data | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{listNot.titulo}}</td>
+                                    <td>{{listNot.conteudo}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div ng-show="formExibicao">
+                        <h5>Usuario</h5>
                         <table class="table table-striped table-hover text-primary">
                             <thead>  
                             <th>Nome</th>

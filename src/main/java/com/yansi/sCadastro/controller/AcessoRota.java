@@ -1,6 +1,7 @@
 package com.yansi.sCadastro.controller;
 
 import com.yansi.sCadastro.modelo.ModCadToken;
+import com.yansi.sCadastro.modelo.ModNoticia;
 import com.yansi.sCadastro.modelo.ModUsuario;
 import com.yansi.sCadastro.modelo.ModToken;
 import com.yansi.sCadastro.util.JwtUtil;
@@ -33,8 +34,6 @@ public class AcessoRota {
         modToken.setUsuario("0");
 
         modUse = useCtl.validaLogin(modUsuario);
-        
-        
 
         if (modUse.getId() != 0) {
             System.out.println(modUse.getUsuario());
@@ -119,5 +118,24 @@ public class AcessoRota {
         status = autCtl.deleteToken(token);
         
         logger.info("S- usuario saiu do sistema");
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/noticia/{token}")
+    public ArrayList<ModNoticia> getNoticia(@PathParam("token") String token) {
+        NoticiaCtl notCtl = new NoticiaCtl();
+        AutorizadorCtl autCtl = new AutorizadorCtl();
+        ModToken modToken = new ModToken();
+        
+        if (autCtl.validaToken(token)) {
+            logger.info("Co- Consultando Noticias");
+            return notCtl.exibicaoTotal(autCtl.busca(token));
+        } else {
+            logger.info("CE- Nenhum usario cadastrado");
+            //ModNoticia modNot = new ModNoticia();
+            ArrayList<ModNoticia> arrayUser = new ArrayList<ModNoticia>();
+            return arrayUser;
+        }   
     }
 }

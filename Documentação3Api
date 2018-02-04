@@ -1,0 +1,23 @@
+Api de Noticias para usuarios.
+
+Deve alimentar o site com noticias separadas por categorias.
+Visitante
+Funcionatio
+Administrador.
+
+
+A api deve validar o token enviado antes de responder para o sistema.
+Apenas os sites que enviarem o token no cabeçalho valido, deve obter a resposta do conteudo.
+
+Banco de dados.
+
+tab_noticia.
+	id
+	data
+	cargo
+	Titulo.
+	Conteudo
+
+Irá ficar faltando a validação do cliente da API, pois gostaria de colocar em um banco local o token da API
+
+

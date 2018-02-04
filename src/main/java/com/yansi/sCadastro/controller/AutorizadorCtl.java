@@ -75,4 +75,19 @@ public class AutorizadorCtl {
         return status;
     }
 
+    ModToken busca(String token) {
+        ModToken modToken = null;
+        AutorizadorDAO autDao = new AutorizadorDAO();
+
+        try {
+
+            modToken = autDao.autorizacao(token);
+
+        } catch (SQLException ex) {
+            logger.error(AutorizadorCtl.class.getName() + " "+ ex);
+        }
+
+        return modToken;
+    }
+
 }
