@@ -1,0 +1,35 @@
+version: '3.4'
+services:
+  api:
+    build: ./api
+    container_name: con_api
+    image: api
+    ports:
+      - "8080:8080"
+    links:
+      - db:mysql
+
+  db:
+    build: ./db
+    image: mysql
+    container_name: con_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "3336:3306"
+
+  back-end:
+    build: ./back-end
+    container_name: backend
+    image: backend
+    links:
+      - db:mysql
+
+  front-end:
+    build: ./front-end
+    container_name: frontend
+    image: frontend
+    ports:
+      - "8000:8080"
+    links:
+      - back-end:backend

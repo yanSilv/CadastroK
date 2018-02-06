@@ -1,0 +1,38 @@
+version: '3.4'
+services:
+  db:
+    build: ./db
+    image: mysql
+    container_name: dbmysq
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSORD=123456
+  api:
+    build: ./api
+    container_name: api
+    image: api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    links:
+      - "db:mysql"
+    #links:
+    #  - "mysqldb:mysql-api"
+  back-end:
+    build: ./back-end
+    container_name: backend
+    image: backend
+    links:
+      - db:mysql
+    #links:
+    #  - "mysqldb:mysql-back"
+  front-end:
+    build: ./front-end
+    container_name: frontend
+    image: frontend
+    ports:
+      - "8000:8080"
+    links:
+      - back-end:backend
