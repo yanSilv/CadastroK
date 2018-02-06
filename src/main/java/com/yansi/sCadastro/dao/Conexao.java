@@ -24,7 +24,7 @@ public class Conexao {
     private void conectar() {
         System.out.println("Conectando ao banco...");
         
-        String linkConexao = "jdbc:mysql://127.0.0.1/usuarioDb";
+        String linkConexao = "jdbc:mysql://172.20.0.2/usuarioDb";
         String usuario = "root";
         String senha   = "123456";
         String driverDB  = "com.mysql.jdbc.Driver";
