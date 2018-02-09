@@ -1,6 +1,6 @@
 var app = angular.module("cadUsuario", ['ngCookies']);
 
-app.value('urlBase', 'http://localhost:8080/sProdutos/rest/');
+app.value('urlBase', 'http://localhost:8000/sProdutos-1.3/rest/');
 
 app.controller("cadUsuarioCtl", function ($scope, $window, $http, urlBase, $cookies) {
     $scope.login = {id: "", nome: "", idade: "", endereco: "", telefone: "", usuario: "", senha: "", status: ""};
